@@ -1,6 +1,7 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -24,10 +25,10 @@ public:
    * @param [in] src_rect The source rectangle of the Image or NULL if the whole
    * image is to be used.
    */
-  Image(SDL_Texture *tex, SDL_Rect *dest_rect, SDL_Rect *src_rect) {
+  Image(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
     m_tex = tex;
-    m_dest_rect = dest_rect;
     m_src_rect = src_rect;
+    m_dest_rect = dest_rect;
   }
 
   /**

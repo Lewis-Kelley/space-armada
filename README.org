@@ -25,7 +25,7 @@ what I’m doing?
 DISCLAIMER: Don’t expect rapid progress on this. I really don’t know what I’m
 doing here, and school eats up an awful lot of time.
 
-- [ ] Draw images on screen
+- [X] Draw images on screen
 - [ ] Draw tiles on screen
 - [ ] Draw whole map on screen
 - [ ] Basic controls (i.e. quit, camera motion…)

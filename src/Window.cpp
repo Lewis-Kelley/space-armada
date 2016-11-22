@@ -17,7 +17,7 @@ bool Window::init() {
   height = INIT_HEIGHT;
   
   if (SDL_Init(SDL_INIT_VIDEO) >= 0) {
-    window = SDL_CreateWindow("FreeSpace++",
+    window = SDL_CreateWindow("space-armada",
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               width, height, SDL_WINDOW_SHOWN);
     if (window == NULL) {

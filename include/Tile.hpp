@@ -6,8 +6,11 @@
 
 #include <SDL2/SDL.h>
 #include "Image.hpp"
-#include "Direction.cpp"
+#include "../src/Direction.cpp"
 
+/**
+ * Holds the information necessary for a single tile in the map.
+ */
 class Tile {
 private:
   //Unit *m_curr_unit; ///< The Unit occupying this Tile or NULL if empty.
