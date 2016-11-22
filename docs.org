@@ -1,0 +1,119 @@
+* Requirements
+1. The game lets players save and load their game from any point outside of a
+   battle or cutscene.
+2. The game has AI that will fight the player in single player.
+3. The game supports local multiplayer where two players play on the same
+   computer. (mostly for debugging and because AI is hard)
+* Core Game
+** Battles
+All battles will take place in space fighters in an SRPG format.
+*** Types of Objectives
+- destroying all enemy fighters,
+- destroying a particular “boss” enemy
+- defending the carrier for some number of turns
+*** Map Types
+Most maps will be simply empty space with two opposing forces of fighters and
+carriers, normally with a background of whatever interstellar object is being
+orbited. Sometimes, there will be atmospheric battles where the fighters have to
+fight around buildings or something, and stationary ground turrets might attack
+them.
+*** Unit’s
+Each Unit has multiple components, each with some maximum and current energy
+amounts. As the components are damaged, the component’s maximum energy is
+decreased until it is completely disabled. Some Unit’s are energizing ships
+which can raise the maximum energy of the components again.
+
+Unit’s also have a total energy capacity that is damaged whenever a component is
+forced to lose energy due to damage. For example, let the shield component have
+a maximum energy of 5 and a currently allocated energy of 4. If the shield takes
+3 points of damage, both its maximum and current energy will then be 2, and 2
+points of energy will be lost from the total energy capacity. Once the total
+energy capacity drops to 0, the unit is disabled for the remainder of the
+battle.
+**** Components
+- shields: reduces damage taken and evasion chance as energy increases; with no
+  energy, there is no damage reduction
+- engines: increases movement range as energy increases; with no energy, the
+  fighter can no longer move
+- weapons: increases attack damage as energy increases; with no energy, the
+  fighter can no longer attack
+**** Movement
+Since these are fighters, there aren’t any differing movement costs for
+different tiles. Unit’s can move through allied Unit’s but are blocked by
+enemies. Additionally, there are other tiles that may be impassable. Unit’s may 
+not end their turn on top of another Unit, even an ally.
+*** Turret’s
+There are two different situations in which Turret’s are in battle: in a carrier
+battle where the Turret’s are part of the carriers themselves and in atmospheric
+battles where there may be ground-based Turret’s.
+
+Turret’s do /not/ have any kind of energy allocation and instead they simply 
+have a total energy value that can be damaged by enemy attacks. They cannot move
+at all, but they have an unlimited attack range. The tradeoff is that when 
+attacking fighters there is a very high chance they will evade the attack with
+their shields, but if their shields are disabled…
+
+Turret’s have a very high attack power against fighters, but not against other
+Turret’s. Fighters do not have this hindrance, and thus make for very good
+Turret destroyers…if they can get close enough.
+
+Turret’s cannot be energized by repair ships in battle, and as such any damage 
+damage dealt to them is permanent.
+*** Attacking
+Each Unit has some attack range determined by their inventory. This will usually
+be around a two tile range. Some weapons will have an AOE (namely torpedoes)
+that will also damage other Enemy units within some radius of the affected 
+target, but only if the initial target is hit.
+** Exploration
+* The Board
+** Tile Members
+- public:
+  + neighbors: Tile[4]
+  + accessible: bool
+  + x position: double
+  + y position: double
+- private:
+  + occupying unit: Unit
+  + transient unit: Unit
+  + image: SDL2image
+** Basics
+Each Unit will also have a pointer to the Tile it is a member of. The Map has an
+array of all the Tiles, with extra, impassable Tiles around the edge to both
+serve as border and to draw.
+** TODO Creation and Deletion
+file loading? saving? what?
+** Movement
+For a Unit to move around the map, it first gets access to the Tile it is
+currently occupying. Then, once a direction is supplied, that Tile calls its
+neighbor’s move function. The method first checks if the move is legal,
+specifically by checking the accessibility flag. If it is legal, the method
+begins a new thread that will move the Unit from one Tile to the next. During
+this transition time, the Unit is in the destination Tile and is drawn with an
+extra displacement.
+
+For determining move range, the starting Tile is found, then a recursive process
+begins to find all accessible Tile’s. Each Tile has its accessibility flag set
+to false, and the recursive function just sets that flag to true. The path to
+get to the destination Tile is never used, calculated, or recorded.
+** Drawing
+Each Tile has a draw procedure that will both draw its background and any Unit’s
+currently in the tile. If the transient Unit is currently moving into the Tile,
+it will be drawn with some displacement from the base Tile.
+* Units
+** Unit Members
+- public:
+  + name: string
+  + current tile: Tile
+- private:
+  + hull health: int
+  + shield health: int
+  + engine health: int
+  + weapon health: int
+  + total power: int
+  + shield power: int
+  + engine power: int
+  + weapon power: int
+** Unit Subclasses
+- Enemy
+- Ally
+- Carrier Part
