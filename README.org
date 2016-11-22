@@ -1,0 +1,36 @@
+* Space-Armada: A dynamic SRPG…in SPACE!
+I’ve always been a big fan of games like Shining Force (which died a rather sad 
+death) and Fire Emblem (which has been doing a lot better). This is my (third)
+attempt at making one of my own with the specific goal of implementing a neat
+combination of energy allocation and a fighter / carrier battle dynamic. For
+more high-level details, look at [[./docs.org][the docs]], and for more technical details,
+use Doxygen to generate coding documentation.
+* Running
+This program requires SDL2 to run, which if you’re on Linux shouldn’t be too
+much of an issue. I don’t know how it would work on OS X, and if you want to run
+this on Windows…good luck.
+
+Aside from that, clone the repo to wherever you want, then:
+#+BEGIN_SRC shell
+  cd space-armada
+  mkdir build
+  cd build
+  cmake ..
+  make
+  ./space-armada
+#+END_SRC
+…and that should work. Maybe. Probably. Have I mentioned I really don’t know
+what I’m doing?
+* Project Status: BROKEN
+DISCLAIMER: Don’t expect rapid progress on this. I really don’t know what I’m
+doing here, and school eats up an awful lot of time.
+
+- [ ] Draw images on screen
+- [ ] Draw tiles on screen
+- [ ] Draw whole map on screen
+- [ ] Basic controls (i.e. quit, camera motion…)
+- [ ] Map scrolling
+- [ ] Unit motion
+- [ ] Unit collision
+- [ ] Limited range of motion
+- …more to come
