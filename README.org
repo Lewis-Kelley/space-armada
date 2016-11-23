@@ -21,13 +21,14 @@ Aside from that, clone the repo to wherever you want, then:
 #+END_SRC
 …and that should work. Maybe. Probably. Have I mentioned I really don’t know
 what I’m doing?
-* Project Status: BROKEN
+* Project Status:
 DISCLAIMER: Don’t expect rapid progress on this. I really don’t know what I’m
 doing here, and school eats up an awful lot of time.
 
 - [X] Draw images on screen
-- [ ] Draw tiles on screen
-- [ ] Draw whole map on screen
+- [X] Draw tiles on screen
+- [X] Draw whole map on screen
+- [ ] Load map from file
 - [ ] Basic controls (i.e. quit, camera motion…)
 - [ ] Map scrolling
 - [ ] Unit motion

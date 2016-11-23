@@ -25,7 +25,8 @@ public:
   bool m_accessible; ///< true if selected unit can walk here, false otherwise.
   
   Tile(Tile *neighbors[4], SDL_Texture *tex,
-       SDL_Rect *src_rect, SDL_Rect *dest_rect);
+       SDL_Rect *src_rect, SDL_Rect *dest_rect, Unit *curr_unit);
+  ~Tile();
   void draw(SDL_Renderer *rend);
   bool move_unit(Direction dir);
   bool toggle_trans_unit();

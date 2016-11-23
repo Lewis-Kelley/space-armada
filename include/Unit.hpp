@@ -12,6 +12,7 @@ private:
   
 public:
   Unit(SDL_Texture *tex, SDL_Rect *src_rect);
+  ~Unit();
   void draw(SDL_Renderer *rend, SDL_Rect *dest_rect);
 };
 

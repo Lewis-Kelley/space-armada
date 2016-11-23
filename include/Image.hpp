@@ -32,6 +32,8 @@ public:
     m_dest_rect = dest_rect;
   }
 
+  ~Image();
+
   /**
    * Draws the given Image to the screen using rend.
    *

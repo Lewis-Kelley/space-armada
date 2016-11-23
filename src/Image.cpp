@@ -1,6 +1,20 @@
 #include "../include/Image.hpp"
 
 /**
+ * Frees the memory used by the Image, specifically the SDL_Rect's. The
+ * SDL_Texture is not affected by this.
+ */
+Image::~Image() {
+  if (m_src_rect != NULL) {
+    delete m_src_rect;
+  }
+
+  if (m_dest_rect != NULL) {
+    delete m_dest_rect;
+  }
+}
+
+/**
  * Creates a new texture from the given file_name.
  *
  * @param [in] file_name The path to the image file to load.
