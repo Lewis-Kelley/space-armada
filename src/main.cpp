@@ -6,6 +6,7 @@
 #include "../include/Image.hpp"
 #include "../include/Tile.hpp"
 #include "../include/TileMap.hpp"
+#include "../include/EventHandler.hpp"
 
 #define ASSETS_DIR std::string("/home/lewis/programs/space-armada/assets/")
 #define BLUE_TILE_PATH (ASSETS_DIR + "blue_tile.png")
@@ -42,9 +43,14 @@ int main(int argc, char *argv[]) {
     tile_list[1] = new Tile(neighbors, tile_tex_2, NULL, &dest_rect_2, NULL);
     
     TileMap map = TileMap(tile_list, 2);
+    EventHandler e_handler = EventHandler(&map);
+    SDL_Event event;
 
     while (true) {
       SDL_RenderClear(Window::rend);
+      while (SDL_PollEvent(&event)) {
+        e_handler.handle_event(&event);
+      }
       map.draw(Window::rend);
       SDL_RenderPresent(Window::rend);
     }

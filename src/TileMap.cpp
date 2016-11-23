@@ -27,7 +27,7 @@ TileMap::~TileMap() {
  * @param [in] file_name The file to load from.
  */
 void load(std::string file_name) {
-  //TODO Implement stubbed function.
+  // TODO Implement stubbed function.
 }
 
 /**
