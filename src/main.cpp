@@ -5,6 +5,7 @@
 #include "../include/Window.hpp"
 #include "../include/Image.hpp"
 #include "../include/Tile.hpp"
+#include "../include/Unit.hpp"
 #include "../include/TileMap.hpp"
 #include "../include/EventHandler.hpp"
 
@@ -20,7 +21,6 @@
  */
 int main(int argc, char *argv[]) {
   if (Window::init()) {
-    Tile *neighbors[] = {NULL, NULL, NULL, NULL};
     SDL_Texture *tile_tex_1 = Image::load_texture(GREEN_TILE_PATH, Window::rend);
     SDL_Rect dest_rect_1;
     dest_rect_1.x = 100;
@@ -35,12 +35,14 @@ int main(int argc, char *argv[]) {
     dest_rect_2.w = 50;
     dest_rect_2.h = 50;
 
-    SDL_Texture *ship_tex = Image::load_texture(RED_SHIP_PATH, Window::rend);
-    Unit ship = Unit(ship_tex, NULL);
-    
     Tile **tile_list = (Tile **)malloc(2 * sizeof *tile_list);
-    tile_list[0] = new Tile(neighbors, tile_tex_1, NULL, &dest_rect_1, &ship);
-    tile_list[1] = new Tile(neighbors, tile_tex_2, NULL, &dest_rect_2, NULL);
+    tile_list[0] = new Tile(tile_tex_1, NULL, &dest_rect_1);
+    tile_list[1] = new Tile(tile_tex_2, NULL, &dest_rect_2);
+
+    tile_list[0]->add_neighbor(tile_list[1], EAST);
+
+    SDL_Texture *ship_tex = Image::load_texture(RED_SHIP_PATH, Window::rend);
+    Unit ship = Unit(ship_tex, NULL, tile_list[0]);
     
     TileMap map = TileMap(tile_list, 2);
     EventHandler e_handler = EventHandler(&map);

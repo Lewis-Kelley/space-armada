@@ -1,13 +1,19 @@
 #include "../include/Unit.hpp"
+#include "../include/Tile.hpp"
 
 /**
  * Create a new Unit with pulling the correct portion of the given texture.
  *
  * @param [in] tex The texture to pull the image from.
  * @param [in] src_rect The rectangle defining where to pull from the texture.
+ * @param [in] tile The Tile this Unit is occupying or NULL if none. If a tile
+ * is provided, the Unit will add itself to the Unit as well.
  */
-Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect) {
+Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect, Tile *tile) {
   m_img = new Image(tex, src_rect, NULL);
+  if (tile != NULL && tile->put_unit(this)) {
+    m_tile = tile;
+  }
 }
 
 /**

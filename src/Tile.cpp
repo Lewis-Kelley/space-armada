@@ -1,4 +1,5 @@
 #include "../include/Tile.hpp"
+#include "../include/Unit.hpp"
 
 /**
  * Initialize a new Tile object with the given neighbors and rendering info.
@@ -10,12 +11,11 @@
  * @param dest_rect The destination rectangle for the background image.
  * @param curr_unit The unit currently occupying this Tile or NULL if none.
  */
-Tile::Tile(Tile *neighbors[4], SDL_Texture *tex,
-           SDL_Rect *src_rect, SDL_Rect *dest_rect, Unit *curr_unit) {
-  m_curr_unit = curr_unit;
+Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
+  m_neighbors = (Tile **)malloc(4 * sizeof *m_neighbors);
+  m_curr_unit = NULL;
   m_trans_unit = NULL;
   m_img = new Image(tex, src_rect, dest_rect);
-  m_neighbors = neighbors;
   m_accessible = false;
 }
 
@@ -43,7 +43,7 @@ Tile::~Tile() {
  */
 void Tile::draw(SDL_Renderer *rend) {
   m_img->draw(rend);
-
+  
   if (m_curr_unit != NULL) {
     m_curr_unit->draw(rend, m_img->m_dest_rect);
   }
@@ -61,6 +61,22 @@ void Tile::draw(SDL_Renderer *rend) {
     
     m_trans_unit->draw(rend, &trans_rect);
   }
+}
+
+/**
+ * Stores the given Unit as the current Unit if none are present. Returns true
+ * in this case. If there is a Unit present, does nothing and returns false.
+ *
+ * @param [in] new_unit The Unit to store.
+ * @return true if successful, false if there was already a Unit present.
+ */
+bool Tile::put_unit(Unit *new_unit) {
+  if (m_curr_unit == NULL) {
+    m_curr_unit = new_unit;
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -101,4 +117,26 @@ bool Tile::toggle_trans_unit() {
   }
 
   return true;
+}
+
+/**
+ * Adds the given Tile as a neighbor in the given direction, both to this Tile
+ * and to the passed neighbor Tile if possible.
+ *
+ * @param [in, out] neighbor The Tile to add as a neighbor and to add a neighbor
+ * to.
+ * @param [in] dir The direction from this Tile to which to add a neighbor.
+ * @return True if successfully added, false if either this Tile or the neighbor
+ * already has a neighbor in the given direction.
+ */
+bool Tile::add_neighbor(Tile *neighbor, Direction dir) {
+  if (m_neighbors[dir] == NULL
+      && neighbor->m_neighbors[(2 + dir) % 4] == NULL) {
+    m_neighbors[dir] = neighbor;
+    neighbor->m_neighbors[(2 + dir) % 4] = this;
+
+    return true;
+  }
+
+  return false;
 }

@@ -6,8 +6,9 @@
 
 #include <SDL2/SDL.h>
 #include "Image.hpp"
-#include "Unit.hpp"
 #include "../src/Direction.cpp"
+
+class Unit;
 
 /**
  * Holds the information necessary for a single tile in the map.
@@ -24,12 +25,13 @@ public:
   Tile **m_neighbors; ///< Collection of 4 Tile pointers for each neighbor.
   bool m_accessible; ///< true if selected unit can walk here, false otherwise.
   
-  Tile(Tile *neighbors[4], SDL_Texture *tex,
-       SDL_Rect *src_rect, SDL_Rect *dest_rect, Unit *curr_unit);
+  Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect);
   ~Tile();
   void draw(SDL_Renderer *rend);
+  bool put_unit(Unit *new_unit);
   bool move_unit(Direction dir);
   bool toggle_trans_unit();
+  bool add_neighbor(Tile *neighbor, Direction dir);
 };
 
 #endif
