@@ -32,6 +32,7 @@ public:
   bool move_unit(Direction dir);
   bool toggle_trans_unit();
   bool add_neighbor(Tile *neighbor, Direction dir);
+  void move_draw_dest(float delta_x, float delta_y);
 };
 
 #endif

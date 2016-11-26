@@ -5,12 +5,12 @@
 /**
  * Initialize a new Tile object with the given neighbors and rendering info.
  *
- * @param neighbors An array of four Tile pointers representing the neighbors.
+ * @param [in] neighbors An array of four Tile pointers representing the neighbors.
  * The order of Tile's is according to the Direction enum.
- * @param tex The background texture for this Tile.
- * @param src_rect The source rectangle for the background image.
- * @param dest_rect The destination rectangle for the background image.
- * @param curr_unit The unit currently occupying this Tile or NULL if none.
+ * @param [in] tex The background texture for this Tile.
+ * @param [in] src_rect The source rectangle for the background image.
+ * @param [in] dest_rect The destination rectangle for the background image.
+ * @param [in] curr_unit The unit currently occupying this Tile or NULL if none.
  */
 Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
   m_neighbors = (Tile **)calloc(4, sizeof *m_neighbors);
@@ -83,7 +83,7 @@ bool Tile::put_unit(Unit *new_unit) {
 /**
  * Move the transient unit to the Tile in the given Direction if possible.
  *
- * @param dir The Direction in which to move the transient unit.
+ * @param [in] dir The Direction in which to move the transient unit.
  * @return true if successful, false if failed
  */
 bool Tile::move_unit(Direction dir) {
@@ -146,4 +146,17 @@ bool Tile::add_neighbor(Tile *neighbor, Direction dir) {
   }
 
   return false;
+}
+
+/**
+ * Moves the location of where this Tile and any Unit's it contains is drawn by
+ * the given amounts.
+ *
+ * @param [in] delta_x The amount to shift the drawing in the x direction.
+ * @param [in] delta_y The amount to shift the drawing in the y direction.
+ */
+void Tile::move_draw_dest(float delta_x, float delta_y) {
+  if (m_img != NULL) {
+    m_img->move_dest(delta_x, delta_y);
+  }
 }

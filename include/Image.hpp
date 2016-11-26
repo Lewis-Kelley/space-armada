@@ -1,3 +1,5 @@
+/** @file
+ */
 #ifndef IMAGE_H
 #define IMAGE_H
 
@@ -57,10 +59,10 @@ public:
    * Moves the destination rectangle by some amount. Primarily to be used by the
    * camera.
    *
-   * @param delta_x The amount to shift in the x direction.
-   * @param delta_y The amount to shift in the y direction.
+   * @param [in] delta_x The amount to shift in the x direction.
+   * @param [in] delta_y The amount to shift in the y direction.
    */
-  void move_dest(int delta_x, int delta_y) {
+  void move_dest(float delta_x, float delta_y) {
     m_dest_rect->x += delta_x;
     m_dest_rect->y += delta_y;
   }

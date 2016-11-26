@@ -71,9 +71,9 @@ void EventHandler::key_down(SDL_Keycode keycode) {
   Control res = KeyHandler::pressed_key(keycode);
 
   if ((res & MOVE_ALL) != 0) {
-    on_move(res);
+    on_move_press(res);
   } else if ((res & CAM_ALL) != 0) {
-    on_cam(res);
+    on_cam_press(res);
   }
 }
 
@@ -84,9 +84,20 @@ void EventHandler::key_down(SDL_Keycode keycode) {
  */
 void EventHandler::key_up(SDL_Keycode keycode) {
   Control res = KeyHandler::released_key(keycode);
+  
+  if ((res & MOVE_ALL) != 0) {
+    on_move_rel(res);
+  } else if ((res & CAM_ALL) != 0) {
+    on_cam_rel(res);
+  }
 }
 
-void EventHandler::on_move(Control move) {
+/**
+ * Handles a movement key being pressed.
+ *
+ * @param [in] move The movement control that has been activated.
+ */
+void EventHandler::on_move_press(Control move) {
   Direction dir;
   switch (move) {
   case MOVE_RIGHT:
@@ -106,11 +117,73 @@ void EventHandler::on_move(Control move) {
     return;
   }
   
-  m_map->move(dir);
+  m_map->move_sel_unit(dir);
 }
 
-void EventHandler::on_cam(Control move) {
-  // TODO Complete stubbed function
+/**
+ * Handles a camera key being pressed.
+ *
+ * @param [in] move The camera control that has been activated.
+ */
+void EventHandler::on_cam_press(Control move) {
+  switch (move) {
+  case CAM_RIGHT:
+    m_map->m_cam_vel_x = CAM_SPEED;
+    break;
+  case CAM_UP:
+    m_map->m_cam_vel_y = -CAM_SPEED;
+    break;
+  case CAM_LEFT:
+    m_map->m_cam_vel_x = -CAM_SPEED;
+    break;
+  case CAM_DOWN:
+    m_map->m_cam_vel_y = CAM_SPEED;
+    break;
+  default:
+    printf("Unrecognized camera control %d.\n", move);
+    break;
+  }
+}
+
+/**
+ * Handles a movement key being released.
+ *
+ * @param [in] move The movement control that has been deactivated.
+ */
+void EventHandler::on_move_rel(Control move) {
+  // TODO Complete stubbed function.
+}
+
+/**
+ * Handles a camera key being released.
+ *
+ * @param [in] move The camera control that has been deactivated.
+ */
+void EventHandler::on_cam_rel(Control move) {
+  switch (move) {
+  case CAM_RIGHT:
+    if (m_map->m_cam_vel_x == CAM_SPEED) {
+      m_map->m_cam_vel_x = 0.0;
+    }
+    break;
+  case CAM_UP:
+    if (m_map->m_cam_vel_y == -CAM_SPEED) {
+      m_map->m_cam_vel_y = 0.0;
+    }
+    break;
+  case CAM_LEFT:
+    if (m_map->m_cam_vel_x == -CAM_SPEED) {
+      m_map->m_cam_vel_x = 0.0;
+    }
+    break;
+  case CAM_DOWN:
+    if (m_map->m_cam_vel_y == CAM_SPEED) {
+      m_map->m_cam_vel_y = 0.0;
+    }
+    break;
+  default:
+    break;
+  }
 }
 
 void EventHandler::on_quit() {

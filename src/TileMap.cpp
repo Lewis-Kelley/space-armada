@@ -49,6 +49,31 @@ void TileMap::draw(SDL_Renderer *rend) {
  * @param [in] dir The direction to move the current unit in.
  * @return true if successfully moved the unit, false if failed.
  */
-bool TileMap::move(Direction dir) {
+bool TileMap::move_sel_unit(Direction dir) {
   return m_sel_unit->m_tile->move_unit(dir);
+}
+
+/**
+ * Moves all the images contained in this map according to the given camera
+ * motion. Note that the given movement directions are of the camera. This means
+ * that if the user presses camera up, you would pass a position delta_y.
+ *
+ * @param [in] delta_x The change in x position of the camera.
+ * @param [in] delta_y The change in y position of the camera.
+ */
+void TileMap::move_camera(float delta_x, float delta_y) {
+  for (int i = 0; i < m_size; i++) {
+    if (m_map[i] != NULL) {
+      m_map[i]->move_draw_dest(-delta_x, -delta_y);
+    }
+  }
+}
+
+/**
+ * Handles all the updates to the items in the map.
+ *
+ * @param [in] delta The time since the last tick.
+ */
+void TileMap::update(double delta) {
+  move_camera(m_cam_vel_x * delta, m_cam_vel_y * delta);
 }

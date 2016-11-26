@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
       while (SDL_PollEvent(event) != 0) {
         e_handler.handle_event(event);
       }
+      map.update(1/30.0);
       map.draw(Window::rend);
       SDL_RenderPresent(Window::rend);
     }
