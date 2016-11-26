@@ -6,6 +6,7 @@
 
 #include <string>
 #include "Tile.hpp"
+#include "Unit.hpp"
 
 /**
  * Handles a full grid of Tile's.
@@ -17,6 +18,8 @@ private:
 
   void free();
 public:
+  Unit *m_sel_unit;
+  
   TileMap() {};
 
   // Debugging constructor:
@@ -27,7 +30,8 @@ public:
   
   ~TileMap();
   void load(std::string file_name);
-  void draw(SDL_Renderer *rend);
+  void draw(SDL_Renderer *rend);  
+  bool move(Direction dir);
 };
 
 #endif

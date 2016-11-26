@@ -43,15 +43,18 @@ int main(int argc, char *argv[]) {
 
     SDL_Texture *ship_tex = Image::load_texture(RED_SHIP_PATH, Window::rend);
     Unit ship = Unit(ship_tex, NULL, tile_list[0]);
+    tile_list[0]->toggle_trans_unit();
     
     TileMap map = TileMap(tile_list, 2);
+    map.m_sel_unit = &ship;
+    
     EventHandler e_handler = EventHandler(&map);
-    SDL_Event event;
 
+    SDL_Event *event = new SDL_Event();
     while (true) {
       SDL_RenderClear(Window::rend);
-      while (SDL_PollEvent(&event)) {
-        e_handler.handle_event(&event);
+      while (SDL_PollEvent(event) != 0) {
+        e_handler.handle_event(event);
       }
       map.draw(Window::rend);
       SDL_RenderPresent(Window::rend);

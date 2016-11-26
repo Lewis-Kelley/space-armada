@@ -42,3 +42,13 @@ void TileMap::draw(SDL_Renderer *rend) {
     }
   }
 }
+
+/**
+ * Moves the currently selected Unit in the desired direction if possible.
+ * 
+ * @param [in] dir The direction to move the current unit in.
+ * @return true if successfully moved the unit, false if failed.
+ */
+bool TileMap::move(Direction dir) {
+  return m_sel_unit->m_tile->move_unit(dir);
+}

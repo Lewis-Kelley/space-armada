@@ -1,10 +1,21 @@
-* Requirements
+* Software Requirements
 1. The game lets players save and load their game from any point outside of a
    battle or cutscene.
 2. The game has AI that will fight the player in single player.
 3. The game supports local multiplayer where two players play on the same
    computer. (mostly for debugging and because AI is hard)
 * Core Game
+** Objectives
+Much like the game FTL, your vessel is caught in enemy territory, and your
+carrier with all onboard fighters needs to attempt to return to safe territory.
+
+This is done by jumping from system to system, facing off against various
+enemies at nearly every turn, stopping at shops to refuel and rearm.
+*** Finale
+Once the player reaches friendly territory, the game will be put on hold until
+two other games are finished. At this point, all three forces will be joined
+into one large battle where they must repel a small armada of enemy ships that
+followed them home.
 ** Battles
 All battles will take place in space fighters in an SRPG format.
 *** Types of Objectives
@@ -65,6 +76,31 @@ be around a two tile range. Some weapons will have an AOE (namely torpedoes)
 that will also damage other Enemy units within some radius of the affected 
 target, but only if the initial target is hit.
 ** Exploration
+In between battles, there is an FTL-style jump map.
+*** Fuel
+Each jump takes some amount of fuel from the carrier, as does launching
+fighters. Each fighter takes some amount of fuel to launch, so launching as few
+as possible may be advantageous for cost-concerned players. Fuel can be bought
+at shops for some amount of scrap.
+*** Scrap
+The main currency in the game, scrap can be gathered from vanquished foes and
+from selling items in shops. It can be used to buy items or fuel from shops.
+*** Items
+Each fighter will have one unique, built-in item that cannot be removed. These
+define a fighter’s “class.” Other items can be freely moved from fighter to
+fighter, with probably around 2-5 item slots per fighter.
+
+Items will have different abilities, most of which will be more than simple stat
+boosts. Current ideas (pre-balance checks) are as follows:
+- projectile attractor :: all attacks against neighboring enemies are redirected
+     toward this unit
+- energy concentrator :: all attacks by this unit are strengthened by the number
+     of nearby allies
+- enemy repulsor :: enemies cannot travel within some range of this unit
+- damage diffusor :: a portion of any damage taken by this unit is shared among
+     nearby units
+- reenergizer :: can “heal” allied units, restoring some of their lost energy
+     capacity
 * The Board
 ** Tile Members
 - public:

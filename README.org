@@ -31,7 +31,9 @@ doing here, and school eats up an awful lot of time.
 - [ ] Load map from file
 - [ ] Basic controls (i.e. quit, camera motion…)
 - [ ] Map scrolling
-- [ ] Unit motion
+- [X] Unit motion
 - [ ] Unit collision
 - [ ] Limited range of motion
 - …more to come
+* Current Issues
+- [ ] Sometimes Unit’s draw behind their Tile’s

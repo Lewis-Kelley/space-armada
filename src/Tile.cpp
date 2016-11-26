@@ -1,5 +1,6 @@
 #include "../include/Tile.hpp"
 #include "../include/Unit.hpp"
+#include <iostream>
 
 /**
  * Initialize a new Tile object with the given neighbors and rendering info.
@@ -12,11 +13,11 @@
  * @param curr_unit The unit currently occupying this Tile or NULL if none.
  */
 Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
-  m_neighbors = (Tile **)malloc(4 * sizeof *m_neighbors);
+  m_neighbors = (Tile **)calloc(4, sizeof *m_neighbors);
   m_curr_unit = NULL;
   m_trans_unit = NULL;
   m_img = new Image(tex, src_rect, dest_rect);
-  m_accessible = false;
+  m_accessible = true;
 }
 
 /**
@@ -58,7 +59,7 @@ void Tile::draw(SDL_Renderer *rend) {
       trans_rect.w = m_img->m_dest_rect->w;
       trans_rect.h = m_img->m_dest_rect->h;
     }
-    
+
     m_trans_unit->draw(rend, &trans_rect);
   }
 }
@@ -87,11 +88,17 @@ bool Tile::put_unit(Unit *new_unit) {
  */
 bool Tile::move_unit(Direction dir) {
   Tile *target = m_neighbors[dir];
-  if (target->m_accessible) {
-    // Move unit
-  }
 
-  return target->m_accessible;
+  if (target != NULL && target->m_accessible) {
+
+    m_trans_unit->m_tile = target;
+    target->m_trans_unit = m_trans_unit;
+    m_trans_unit = NULL;
+    
+    // TODO Start a gradual movement process.
+  }
+  
+  return target != NULL && target->m_accessible;
 }
 
 /**
@@ -134,7 +141,7 @@ bool Tile::add_neighbor(Tile *neighbor, Direction dir) {
       && neighbor->m_neighbors[(2 + dir) % 4] == NULL) {
     m_neighbors[dir] = neighbor;
     neighbor->m_neighbors[(2 + dir) % 4] = this;
-
+    
     return true;
   }
 

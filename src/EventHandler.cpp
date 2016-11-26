@@ -84,11 +84,29 @@ void EventHandler::key_down(SDL_Keycode keycode) {
  */
 void EventHandler::key_up(SDL_Keycode keycode) {
   Control res = KeyHandler::released_key(keycode);
-  
 }
 
 void EventHandler::on_move(Control move) {
-  // TODO Complete stubbed function
+  Direction dir;
+  switch (move) {
+  case MOVE_RIGHT:
+    dir = EAST;
+    break;
+  case MOVE_UP:
+    dir = NORTH;
+    break;
+  case MOVE_LEFT:
+    dir = WEST;
+    break;
+  case MOVE_DOWN:
+    dir = SOUTH;
+    break;
+  default:
+    printf("Unrecognized move control %d.\n", move);
+    return;
+  }
+  
+  m_map->move(dir);
 }
 
 void EventHandler::on_cam(Control move) {
