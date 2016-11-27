@@ -10,7 +10,7 @@
  * is provided, the Unit will add itself to the Unit as well.
  */
 Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect, Tile *tile) {
-  m_img = new Image(tex, src_rect, NULL);
+  m_img = new Image(tex, src_rect);
   if (tile != NULL && tile->put_unit(this)) {
     m_tile = tile;
   }

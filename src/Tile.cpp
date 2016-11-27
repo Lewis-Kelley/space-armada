@@ -5,18 +5,19 @@
 /**
  * Initialize a new Tile object with the given neighbors and rendering info.
  *
- * @param [in] neighbors An array of four Tile pointers representing the neighbors.
- * The order of Tile's is according to the Direction enum.
+ * @param [in] neighbors An array of four Tile pointers representing the
+ * neighbors. The order of Tile's is according to the Direction enum.
  * @param [in] tex The background texture for this Tile.
  * @param [in] src_rect The source rectangle for the background image.
  * @param [in] dest_rect The destination rectangle for the background image.
  * @param [in] curr_unit The unit currently occupying this Tile or NULL if none.
  */
-Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
+Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, float dest_x, float dest_y,
+           float dest_w, float dest_h) {
   m_neighbors = (Tile **)calloc(4, sizeof *m_neighbors);
   m_curr_unit = NULL;
   m_trans_unit = NULL;
-  m_img = new Image(tex, src_rect, dest_rect);
+  m_img = new Image(tex, src_rect, dest_x, dest_y, dest_w, dest_h);
   m_accessible = true;
 }
 
@@ -46,18 +47,16 @@ void Tile::draw(SDL_Renderer *rend) {
   m_img->draw(rend);
   
   if (m_curr_unit != NULL) {
-    m_curr_unit->draw(rend, m_img->m_dest_rect);
+    SDL_Rect dest_rect = m_img->get_rect();
+    m_curr_unit->draw(rend, &dest_rect);
   }
 
   if (m_trans_unit != NULL) {
-    SDL_Rect trans_rect;
-    if (m_trans_off_x == 0 && m_trans_off_y == 0) {
-      trans_rect = *m_img->m_dest_rect;
-    } else {
-      trans_rect.x = m_img->m_dest_rect->x + m_trans_off_x;
-      trans_rect.y = m_img->m_dest_rect->y + m_trans_off_y;
-      trans_rect.w = m_img->m_dest_rect->w;
-      trans_rect.h = m_img->m_dest_rect->h;
+    SDL_Rect trans_rect = m_img->get_rect();
+    
+    if (m_trans_off_x != 0 || m_trans_off_y != 0) {
+      trans_rect.x += m_trans_off_x;
+      trans_rect.y += m_trans_off_y;
     }
 
     m_trans_unit->draw(rend, &trans_rect);

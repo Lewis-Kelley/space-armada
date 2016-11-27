@@ -8,14 +8,14 @@
 #include "KeyHandler.hpp"
 #include "TileMap.hpp"
 
-#define CAM_SPEED 5
+#define CAM_SPEED 0.2
 
 /**
- * Handles SDL_Events.
+ * Handles SDL_Event's.
  */
 class EventHandler {
 private:
-  TileMap *m_map;
+  TileMap *m_map; ///< The map associated with this EventHandler.
 
   void key_down(SDL_Keycode keycode);
   void key_up(SDL_Keycode keycode);

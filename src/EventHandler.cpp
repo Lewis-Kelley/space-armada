@@ -84,7 +84,7 @@ void EventHandler::key_down(SDL_Keycode keycode) {
  */
 void EventHandler::key_up(SDL_Keycode keycode) {
   Control res = KeyHandler::released_key(keycode);
-  
+
   if ((res & MOVE_ALL) != 0) {
     on_move_rel(res);
   } else if ((res & CAM_ALL) != 0) {
@@ -162,22 +162,22 @@ void EventHandler::on_move_rel(Control move) {
 void EventHandler::on_cam_rel(Control move) {
   switch (move) {
   case CAM_RIGHT:
-    if (m_map->m_cam_vel_x == CAM_SPEED) {
+    if (m_map->m_cam_vel_x > 0) {
       m_map->m_cam_vel_x = 0.0;
     }
     break;
   case CAM_UP:
-    if (m_map->m_cam_vel_y == -CAM_SPEED) {
+    if (m_map->m_cam_vel_y < 0) {
       m_map->m_cam_vel_y = 0.0;
     }
     break;
   case CAM_LEFT:
-    if (m_map->m_cam_vel_x == -CAM_SPEED) {
+    if (m_map->m_cam_vel_x < 0) {
       m_map->m_cam_vel_x = 0.0;
     }
     break;
   case CAM_DOWN:
-    if (m_map->m_cam_vel_y == CAM_SPEED) {
+    if (m_map->m_cam_vel_y > 0) {
       m_map->m_cam_vel_y = 0.0;
     }
     break;

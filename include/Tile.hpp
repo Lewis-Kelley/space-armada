@@ -25,7 +25,8 @@ public:
   Tile **m_neighbors; ///< Collection of 4 Tile pointers for each neighbor.
   bool m_accessible; ///< true if selected unit can walk here, false otherwise.
   
-  Tile(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect);
+  Tile(SDL_Texture *tex, SDL_Rect *src_rect, float dest_x, float dest_y,
+       float dest_w, float dest_h);
   ~Tile();
   void draw(SDL_Renderer *rend);
   bool put_unit(Unit *new_unit);

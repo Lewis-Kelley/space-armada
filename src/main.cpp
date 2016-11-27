@@ -22,22 +22,11 @@
 int main(int argc, char *argv[]) {
   if (Window::init()) {
     SDL_Texture *tile_tex_1 = Image::load_texture(GREEN_TILE_PATH, Window::rend);
-    SDL_Rect dest_rect_1;
-    dest_rect_1.x = 100;
-    dest_rect_1.y = 150;
-    dest_rect_1.w = 50;
-    dest_rect_1.h = 50;
-
     SDL_Texture *tile_tex_2 = Image::load_texture(PINK_TILE_PATH, Window::rend);
-    SDL_Rect dest_rect_2;
-    dest_rect_2.x = 150;
-    dest_rect_2.y = 150;
-    dest_rect_2.w = 50;
-    dest_rect_2.h = 50;
 
     Tile **tile_list = (Tile **)malloc(2 * sizeof *tile_list);
-    tile_list[0] = new Tile(tile_tex_1, NULL, &dest_rect_1);
-    tile_list[1] = new Tile(tile_tex_2, NULL, &dest_rect_2);
+    tile_list[0] = new Tile(tile_tex_1, NULL, 100, 150, 50, 50);
+    tile_list[1] = new Tile(tile_tex_2, NULL, 150, 150, 50, 50);
 
     tile_list[0]->add_neighbor(tile_list[1], EAST);
 
@@ -51,12 +40,17 @@ int main(int argc, char *argv[]) {
     EventHandler e_handler = EventHandler(&map);
 
     SDL_Event *event = new SDL_Event();
+    double last_time = SDL_GetTicks();
+    double curr_time;
+    
     while (true) {
       SDL_RenderClear(Window::rend);
       while (SDL_PollEvent(event) != 0) {
         e_handler.handle_event(event);
       }
-      map.update(1/30.0);
+      curr_time = SDL_GetTicks();
+      map.update(curr_time - last_time);
+      last_time = curr_time;
       map.draw(Window::rend);
       SDL_RenderPresent(Window::rend);
     }

@@ -16,34 +16,22 @@ class Image {
 private:
   SDL_Texture *m_tex; ///< The SDL_Texture that actually holds the image.
   SDL_Rect *m_src_rect; ///< The source rectangle of the Image.
-public:
-  SDL_Rect *m_dest_rect; ///< The destination retangle of the Image.
+  float* m_dest; ///< An array of information for the destination of the image.
   
-  /**
-   * Creates a new Image from the given SDL_Texture using the given parameters.
-   *
-   * @param [in] tex The SDL_Texture that actually holds the image to render.
-   * @param [in] dest_rect The destination rectangle of the Image or NULL if the
-   * image will take up the whole screen.
-   * @param [in] src_rect The source rectangle of the Image or NULL if the whole
-   * image is to be used.
-   */
-  Image(SDL_Texture *tex, SDL_Rect *src_rect, SDL_Rect *dest_rect) {
-    m_tex = tex;
-    m_src_rect = src_rect;
-    m_dest_rect = dest_rect;
-  }
-
+  enum Dest_Field {
+    X = 0,
+    Y = 1,
+    W = 2,
+    H = 3
+  };
+public:
+  Image(SDL_Texture *tex, SDL_Rect *src_rect, float dest_x, float dest_y,
+        float dest_w, float dest_h);
+  Image(SDL_Texture *tex, SDL_Rect *src_rect);
   ~Image();
 
-  /**
-   * Draws the given Image to the screen using rend.
-   *
-   * @param [in] rend The SDL_Renderer to be used to draw the image.
-   */
-  void draw(SDL_Renderer *rend) {
-    SDL_RenderCopy(rend, m_tex, m_src_rect, m_dest_rect);
-  }
+  SDL_Rect get_rect();
+  void draw(SDL_Renderer *rend);
 
   /**
    * Draws the given Image to the screen using rend.
@@ -63,8 +51,8 @@ public:
    * @param [in] delta_y The amount to shift in the y direction.
    */
   void move_dest(float delta_x, float delta_y) {
-    m_dest_rect->x += delta_x;
-    m_dest_rect->y += delta_y;
+    m_dest[X] += delta_x;
+    m_dest[Y] += delta_y;
   }
 
   static SDL_Texture * load_texture(std::string file_name, SDL_Renderer *rend);
