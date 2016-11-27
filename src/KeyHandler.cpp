@@ -16,6 +16,11 @@ Control KeyHandler::pressed_key(SDL_Keycode keycode) {
   Control exclusive_to = NONE;
   
   switch (keycode) {
+  case SDLK_q:
+    selected = QUIT;
+    exclusive_to = NONE;
+    break;
+    
   case SDLK_RIGHT:
     selected = MOVE_RIGHT;
     exclusive_to = MOVE_ALL;

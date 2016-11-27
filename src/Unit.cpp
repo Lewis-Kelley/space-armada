@@ -6,8 +6,8 @@
  *
  * @param [in] tex The texture to pull the image from.
  * @param [in] src_rect The rectangle defining where to pull from the texture.
- * @param [in] tile The Tile this Unit is occupying or NULL if none. If a tile
- * is provided, the Unit will add itself to the Unit as well.
+ * @param [in, out] tile The Tile this Unit is occupying or NULL if none. If a
+ * tile is provided, the Unit will add itself to the Unit as well.
  */
 Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect, Tile *tile) {
   m_img = new Image(tex, src_rect);
@@ -18,9 +18,13 @@ Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect, Tile *tile) {
 
 /**
  * Free the memory used by this Unit.
+ * FIXME Somehow this is crashing the program when it’s closing.
  */
 Unit::~Unit() {
-  delete m_img;
+  if (m_img != NULL) {
+    delete m_img;
+    m_img = NULL;
+  }
 }
 
 /**

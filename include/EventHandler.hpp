@@ -5,6 +5,7 @@
 #define EVENTHANDLER_H
 
 #include <SDL2/SDL.h>
+#include "Window.hpp"
 #include "KeyHandler.hpp"
 #include "TileMap.hpp"
 

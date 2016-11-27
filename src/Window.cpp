@@ -4,6 +4,7 @@ SDL_Window * Window::window;
 SDL_Renderer * Window::rend;
 int Window::width;
 int Window::height;
+bool Window::running;
 
 /**
  * Initializes the window and renderer.

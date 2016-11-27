@@ -20,6 +20,7 @@ public:
   static SDL_Renderer *rend;
   static int width;
   static int height;
+  static bool running;
   static bool init();
   static void free();
 };

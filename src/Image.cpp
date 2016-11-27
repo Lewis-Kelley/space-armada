@@ -43,10 +43,12 @@ Image::Image(SDL_Texture *tex, SDL_Rect *src_rect) {
 Image::~Image() {
   if (m_src_rect != NULL) {
     delete m_src_rect;
+    m_src_rect = NULL;
   }
 
   if (m_dest != NULL) {
     free(m_dest);
+    m_dest = NULL;
   }
 }
 

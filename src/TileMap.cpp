@@ -11,6 +11,7 @@ void TileMap::free() {
     
     delete m_map;
   }
+  m_map = NULL;
 }
 
 /**

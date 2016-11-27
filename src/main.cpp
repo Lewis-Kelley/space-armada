@@ -36,17 +36,19 @@ int main(int argc, char *argv[]) {
     
     TileMap map = TileMap(tile_list, 2);
     map.m_sel_unit = &ship;
-    
-    EventHandler e_handler = EventHandler(&map);
 
-    SDL_Event *event = new SDL_Event();
+    // Final setup
+    EventHandler e_handler = EventHandler(&map);
+    SDL_Event event;
     double last_time = SDL_GetTicks();
     double curr_time;
-    
-    while (true) {
+    Window::running = true;
+
+    // Main loop
+    while (Window::running) {
       SDL_RenderClear(Window::rend);
-      while (SDL_PollEvent(event) != 0) {
-        e_handler.handle_event(event);
+      while (SDL_PollEvent(&event) != 0) {
+        e_handler.handle_event(&event);
       }
       curr_time = SDL_GetTicks();
       map.update(curr_time - last_time);
@@ -54,6 +56,12 @@ int main(int argc, char *argv[]) {
       map.draw(Window::rend);
       SDL_RenderPresent(Window::rend);
     }
+
+    // Cleanup
+    SDL_DestroyTexture(tile_tex_1);
+    SDL_DestroyTexture(tile_tex_2);
+    SDL_DestroyTexture(ship_tex);
+    Window::free();
   } else {
     return 1;
   }

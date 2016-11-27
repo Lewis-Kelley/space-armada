@@ -153,3 +153,68 @@ it will be drawn with some displacement from the base Tile.
 - Enemy
 - Ally
 - Carrier Part
+* Loading Files
+Note that this may change later for more optimized saving…but honestly these
+files will be tiny for the most part anyways, so I’m not sure it’s worth the
+trouble.
+
+Additionally, formats /will/ be changing a lot as more data needs to be stored
+if new things are needed to be added. Don’t expect old saves to work for long.
+** Battles
+*** Textures
+First is a list of all the textures that will be loaded for the map. This simply
+contains a number of textures to load and then a list of file paths on separate
+lines.
+
+Example:
+3
+~/img/test.png
+~/img/other.png
+~/img/final.png
+*** Tiles
+To define the layout, there are two numbers separated by a space determining the
+dimensions of the entire map. Next is a list of all the information needed for
+each Tile. This is ordered as:
+- index of referenced Texture (using the above example, test.png is 0, other.png
+  is 1…)
+- 4 numbers indicating, in order, the x, y, w, and h of the source rectangle or
+  0 0 0 0 if the source rectangle should include the whole texture
+- a 1 or 0 indicating that the Tile is accessible or inaccessible, respectively
+
+These Tiles are ordered from top to bottom, left to right, just like reading
+standard English.
+
+Example:
+2 2
+0 0 0 0 0 1
+0 0 0 0 0 0
+1 50 0 50 50 1
+1 50 50 50 50 1
+
+This translates to:
+| test (open)  | test (blocked) |
+|--------------+----------------|
+| other (open) | other(open)    |
+*** Units
+The list of Units starts with the number of Units on the board. Next is a
+Texture index and source rectangle dimensions just like the Tiles. Additionally
+there is a Tile index at the very end. Since the location of the Unit is
+dependent on the Tile it points at, the order of the lines doesn’t matter.
+
+Example:
+2
+2 0 0 50 50 0
+2 0 50 50 50 2
+*** Complete Example
+3
+~/img/test.png
+~/img/other.png
+~/img/final.png
+2 2
+0 0 0 0 0 1
+0 0 0 0 0 0
+1 50 0 50 50 1
+1 50 50 50 50 1
+2
+2 0 0 50 50 0
+2 0 50 50 50 2

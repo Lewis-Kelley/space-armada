@@ -70,7 +70,9 @@ void EventHandler::handle_event(SDL_Event *event) {
 void EventHandler::key_down(SDL_Keycode keycode) {
   Control res = KeyHandler::pressed_key(keycode);
 
-  if ((res & MOVE_ALL) != 0) {
+  if (res == QUIT) {
+    Window::running = false;
+  } else if ((res & MOVE_ALL) != 0) {
     on_move_press(res);
   } else if ((res & CAM_ALL) != 0) {
     on_cam_press(res);
