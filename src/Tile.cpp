@@ -25,14 +25,6 @@ Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, float dest_x, float dest_y,
  * Frees the memory used by the Tile.
  */
 Tile::~Tile() {
-  if (m_curr_unit != NULL) {
-    delete m_curr_unit;
-  }
-
-  if (m_trans_unit != NULL) {
-    delete m_trans_unit;
-  }
-
   if (m_img != NULL) {
     delete m_img;
   }

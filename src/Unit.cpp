@@ -18,13 +18,14 @@ Unit::Unit(SDL_Texture *tex, SDL_Rect *src_rect, Tile *tile) {
 
 /**
  * Free the memory used by this Unit.
- * FIXME Somehow this is crashing the program when it’s closing.
  */
 Unit::~Unit() {
   if (m_img != NULL) {
     delete m_img;
     m_img = NULL;
   }
+
+  m_tile = NULL;
 }
 
 /**

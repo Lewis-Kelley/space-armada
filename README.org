@@ -30,10 +30,10 @@ doing here, and school eats up an awful lot of time.
 - [X] Draw whole map on screen
 - [X] Proper time delta integration
 - [ ] Load map from file
-- [2/3] Basic controls
+- [3/3] Basic controls
   - [X] unit motion
   - [X] camera motion
-  - [ ] quit
+  - [X] quit
 - [ ] Map auto-scrolling
 - [X] Unit motion
 - [ ] Unit collision
@@ -43,7 +43,7 @@ doing here, and school eats up an awful lot of time.
 - [ ] Sometimes Unit’s draw behind their Tile’s
 - [ ] There’s some weird graphical bugs with the camera motion, probably due to
   different Tile’s not being drawn at the same time?
-- [ ] Deleting the ship Unit crashes the program on close.
+- [X] Deleting the ship Unit crashes the program on close.
 * Controls
 - arrow keys to move unit
 - w-a-r-s to move camera (I use Colemak instead of QWERTY. Deal with it or just
