@@ -19,6 +19,8 @@ Tile::Tile(SDL_Texture *tex, SDL_Rect *src_rect, float dest_x, float dest_y,
   m_trans_unit = NULL;
   m_img = new Image(tex, src_rect, dest_x, dest_y, dest_w, dest_h);
   m_accessible = true;
+  m_trans_off_x = 0;
+  m_trans_off_y = 0;
 }
 
 /**
@@ -36,22 +38,20 @@ Tile::~Tile() {
  * @param [in] rend The renderer to draw with.
  */
 void Tile::draw(SDL_Renderer *rend) {
+  SDL_Rect dest_rect = m_img->get_rect();
   m_img->draw(rend);
   
   if (m_curr_unit != NULL) {
-    SDL_Rect dest_rect = m_img->get_rect();
     m_curr_unit->draw(rend, &dest_rect);
   }
 
   if (m_trans_unit != NULL) {
-    SDL_Rect trans_rect = m_img->get_rect();
-    
     if (m_trans_off_x != 0 || m_trans_off_y != 0) {
-      trans_rect.x += m_trans_off_x;
-      trans_rect.y += m_trans_off_y;
+      dest_rect.x += m_trans_off_x;
+      dest_rect.y += m_trans_off_y;
     }
 
-    m_trans_unit->draw(rend, &trans_rect);
+    m_trans_unit->draw(rend, &dest_rect);
   }
 }
 

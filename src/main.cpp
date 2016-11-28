@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
     tile_list[0]->add_neighbor(tile_list[1], EAST);
 
     SDL_Texture *ship_tex = Image::load_texture(RED_SHIP_PATH, Window::rend);
-    Unit ship = Unit(ship_tex, NULL, tile_list[0]);
-    tile_list[0]->toggle_trans_unit();
+    Unit ship = Unit(ship_tex, NULL, tile_list[1]);
+    tile_list[1]->toggle_trans_unit();
     
     TileMap map = TileMap(tile_list, 2);
     map.m_sel_unit = &ship;
